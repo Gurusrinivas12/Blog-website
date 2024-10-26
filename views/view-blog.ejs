@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/styles/main.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+      rel="stylesheet"
+    />
+    <title>Coding blogs View Blog</title>
+  </head>
+  <body>
+    <%- include("partials/header.ejs") %>
+    <main class="view-blog-container">
+      <h1><%= bPost.title %></h1>
+      <h3><%= bPost.date %></h3>
+      <img src="<%= bPost.image %>" alt="Blog Image" />
+      <p><%= bPost.description %></p>
+    
+      <section class="comments-section">
+        <h2>Comments</h2>
+        <% if (bPost.comments && bPost.comments.length > 0) { %>
+          <ul>
+            <% bPost.comments.forEach(comment => { %>
+              <li>
+                <strong>@<%= comment.user %></strong> <%= comment.date %><br> <%= comment.content %><br>
+              </li>
+            <% }); %>
+          </ul>
+        <% } else { %>
+          <p>No comments yet.</p>
+        <% } %>
+      
+    
+      <!-- Add form to submit a new comment -->
+      <form action="/view/<%= bPost.id %>/comment" method="POST">
+        <label for="user">Name:</label>
+        <input type="text" id="user" name="user" required />
+    
+        <label for="content">Comment:</label>
+        <textarea id="content" name="content" required></textarea>
+    
+        <button type="submit">Comment</button>
+      </form>
+      </section>
+    </main>
+    
+    <%- include("partials/footer.ejs") %>
+  </body>
+  <script
+    src="https://kit.fontawesome.com/1cc61be9b8.js"
+    crossorigin="anonymous"
+    defer
+  ></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  <script src="/js/main.js"></script>
+</html>
